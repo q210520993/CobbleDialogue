@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "cobbledialogue",
+  "version": "${version}",
+  "name": "CobbleDialogue",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/cobbledialogue/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.c1ok.cobbledialogue.cobbledialogue.client.CobbledialogueDataGenerator"
+    ],
+    "client": [
+      "com.c1ok.cobbledialogue.cobbledialogue.client.CobbledialogueClient"
+    ],
+    "main": [
+      "com.c1ok.cobbledialogue.cobbledialogue.Cobbledialogue"
+    ]
+  },
+  "mixins": [
+    "cobbledialogue.mixins.json",
+    {
+      "config": "cobbledialogue.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
