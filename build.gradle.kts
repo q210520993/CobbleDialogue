@@ -75,7 +75,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-    modImplementation("net.kyori:adventure-platform-mod-shared-fabric-repack:6.4.0")?.let { include(it) } // for Minecraft 1.21.5
+    modImplementation(include("net.kyori:adventure-platform-fabric:6.4.0")!!)
 
     // GooeyLibs
     modImplementation("ca.landonjw.gooeylibs:api:3.1.0-1.21.1-SNAPSHOT")

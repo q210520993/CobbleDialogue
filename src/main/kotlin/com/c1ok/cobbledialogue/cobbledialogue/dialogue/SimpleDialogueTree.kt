@@ -1,15 +1,18 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerData
-
+import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 
 fun interface DialogueRootSelector {
-    fun select(playerData: PlayerData): String
+    fun select(dialoguer: Dialoguer): String
 }
 
-open class SimpleDialogueTree(val rootSelector: DialogueRootSelector, val nodes: List<DialogueNode>) : DialogueTree {
-    override fun getRootNode(playerData: PlayerData): DialogueNode {
-        val rootId = rootSelector.select(playerData)
-        return nodes.find { it.id == rootId } ?: throw IllegalStateException("root node not found")
+open class SimpleDialogueTree(private val rootid: DialogueRootSelector, val nodes: List<DialogueNode>) : DialogueTree {
+    override fun getRootNode(dialoguer: Dialoguer): DialogueNode? {
+        val id = rootid.select(dialoguer)
+        return nodes.first { it.id == id }
+    }
+
+    override fun getNodeById(id: String): DialogueNode? {
+        return nodes.first { it.id == id }
     }
 }

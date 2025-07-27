@@ -1,5 +1,7 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue.test
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.ConsoleDialoguer
+import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.*
 import net.kyori.adventure.text.Component
 
@@ -36,7 +38,7 @@ val questNode = object : DialogueNode {
 }
 
 
-fun initDialogueSystem() {
+fun main() {
 
     val simpleSelector = DialogueRootSelector { playerData->
         // 做一些判断，判断玩家该进行哪一段对话，这里为例子直接返回"start"了
@@ -44,9 +46,13 @@ fun initDialogueSystem() {
     }
 
     val testTree = SimpleDialogueTree(
-        rootSelector = simpleSelector,
-        nodes = listOf(startNode, questNode)
+        simpleSelector,
+        listOf(startNode, questNode)
     )
+
+    DialogueManager.startSession(ConsoleDialoguer, testTree)
+    DialogueManager.selectOption(ConsoleDialoguer.id, 0)
+    DialogueManager.selectOption(ConsoleDialoguer.id, 1)
 
 }
 

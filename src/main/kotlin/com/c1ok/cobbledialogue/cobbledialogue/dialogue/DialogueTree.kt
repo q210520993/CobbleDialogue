@@ -1,7 +1,11 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerData
+import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 
 interface DialogueTree {
-    fun getRootNode(playerData: PlayerData): DialogueNode
+
+    fun getRootNode(dialoguer: Dialoguer): DialogueNode?
+
+    fun getNodeById(id: String): DialogueNode?
+
 }
