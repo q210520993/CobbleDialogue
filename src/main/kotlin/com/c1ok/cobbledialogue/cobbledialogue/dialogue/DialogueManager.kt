@@ -2,12 +2,35 @@ package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueSession
 import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueText
+import net.minecraft.network.chat.Component
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 object DialogueManager {
+    val startNode = object : DialogueNode {
+        override val id = "start"
+        override val text = PhaseDialogueText(Arrays.asList(
+            ComponentTextUnit(Component.literal("你好！需要什么帮助吗？")),
+            ComponentTextUnit(Component.literal("not really?")),
+            ComponentTextUnit(Component.literal("no way!"))
+        ))
+        override val options = listOf(
+            DialogueOption(Component.literal("关于任务...")) {
+                DialogueActionResult.Advance("quest_info")
+            },
+            DialogueOption(Component.literal("交易")) {
+                DialogueActionResult.Execute { /*TODO OpenTrade*/ }
+            },
+            DialogueOption(Component.literal("再见")) {
+                DialogueActionResult.Exit
+            }
+        )
+    }
 
     val activeSessions = ConcurrentHashMap<UUID, DialogueSession>()
+    val dialogueStorage = DialogueStorage().addDialogue(startNode)
 
     fun startSession(dialoguer: Dialoguer, tree: DialogueTree) {
         val rootNode = tree.getRootNode(dialoguer) ?: return
