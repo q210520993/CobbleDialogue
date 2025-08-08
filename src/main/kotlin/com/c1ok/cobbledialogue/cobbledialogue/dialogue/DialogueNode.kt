@@ -10,4 +10,6 @@ interface DialogueNode {
     val text: DialogueText<TextUnit>
     // 选项
     val options: List<DialogueOption>
+    //结束触发
+    val result:DialogueActionResult
 }

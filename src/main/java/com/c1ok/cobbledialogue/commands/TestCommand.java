@@ -2,10 +2,7 @@ package com.c1ok.cobbledialogue.commands;
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer;
 import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDialoguer;
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager;
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueNode;
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueRootSelector;
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.SimpleDialogueTree;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.*;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -46,9 +43,9 @@ public class TestCommand extends Subcommand {
                 @NotNull
                 @Override
                 public String select(@NotNull Dialoguer dialoguer) {
-                    return "start";
+                    return "start_argue";
                 }
-            }, Arrays.asList(node)));
+            }, Arrays.asList(PhaseNodesKt.getTown1_mayor_start_argue())));
 
             return 1;
         } catch (Exception e) {

@@ -1,6 +1,9 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue.text
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
+import net.minecraft.network.chat.Component
+import java.util.ArrayList
+import java.util.Arrays
 
 class PhaseDialogueText(text: List<ComponentTextUnit>) : DialogueText<TextUnit>{
     val components:List<ComponentTextUnit> = text
@@ -12,5 +15,16 @@ class PhaseDialogueText(text: List<ComponentTextUnit>) : DialogueText<TextUnit>{
                 dialoguer.showDialogueTextUnit(a)
                 Thread.sleep(1000L)
             }
+    }
+}
+
+class PhaseDialogueBuilder{
+    private val components:List<ComponentTextUnit> = ArrayList()
+    fun addText(text: String): PhaseDialogueBuilder {
+        components + ComponentTextUnit(Component.literal(text))
+        return this
+    }
+    fun build():PhaseDialogueText{
+        return PhaseDialogueText(components)
     }
 }

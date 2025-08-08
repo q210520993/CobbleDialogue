@@ -29,6 +29,8 @@ val startNode = object : DialogueNode {
             DialogueActionResult.Exit
         }
     )
+    override val result: DialogueActionResult
+        get() = TODO("Not yet implemented")
 }
 
 val questNode = object : DialogueNode {
@@ -45,6 +47,8 @@ val questNode = object : DialogueNode {
             DialogueActionResult.Advance("start")
         }
     )
+    override val result: DialogueActionResult
+        get() = TODO("Not yet implemented")
 }
 
 

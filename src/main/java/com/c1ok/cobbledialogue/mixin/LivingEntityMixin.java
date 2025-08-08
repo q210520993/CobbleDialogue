@@ -1,5 +1,8 @@
 package com.c1ok.cobbledialogue.mixin;
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueSession;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueOption;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerStatusPacketListenerImpl;
@@ -23,7 +26,9 @@ public class LivingEntityMixin {
     public void onSwap(Map<EquipmentSlot, ItemStack> map, CallbackInfo ci, ItemStack itemStack, ItemStack itemStack2){
         LivingEntity livingEntity = (LivingEntity)(Object)this;
         if(livingEntity instanceof ServerPlayer serverPlayer) {
-            System.out.println(itemStack+":"+itemStack2);
+            DialogueSession session = DialogueManager.INSTANCE.getActiveSessions().get(serverPlayer.getUUID());
+            DialogueManager.INSTANCE.selectOption(serverPlayer.getUUID(),serverPlayer.getInventory().selected);
+            System.out.println("asdadsa");
         }
     }
 }

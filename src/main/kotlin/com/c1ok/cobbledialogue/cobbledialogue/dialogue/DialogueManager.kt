@@ -27,10 +27,12 @@ object DialogueManager {
                 DialogueActionResult.Exit
             }
         )
+        override val result: DialogueActionResult
+            get() = TODO("Not yet implemented")
     }
 
     val activeSessions = ConcurrentHashMap<UUID, DialogueSession>()
-    val dialogueStorage = DialogueStorage().addDialogue(startNode)
+    val dialogueStorage = DialogueStorage.NodeStorage.addDialogue(startNode)
 
     fun startSession(dialoguer: Dialoguer, tree: DialogueTree) {
         val rootNode = tree.getRootNode(dialoguer) ?: return
