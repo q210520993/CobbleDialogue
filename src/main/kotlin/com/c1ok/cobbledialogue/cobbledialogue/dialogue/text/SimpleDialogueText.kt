@@ -2,7 +2,8 @@ package com.c1ok.cobbledialogue.cobbledialogue.dialogue.text
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 
-class SimpleDialogueText(text: ComponentTextUnit) : DialogueText<TextUnit>{
+class SimpleDialogueText(text: ComponentTextUnit) :
+    DialogueText<TextUnit> {
     val component:ComponentTextUnit = text
 
     override fun dialogue(dialoguer: Dialoguer) {

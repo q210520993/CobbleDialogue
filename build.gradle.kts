@@ -77,6 +77,7 @@ dependencies {
     modImplementation("ca.landonjw.gooeylibs:api:3.1.0-1.21.1-SNAPSHOT")
     modRuntimeOnly("ca.landonjw.gooeylibs:fabric:3.1.0-1.21.1-SNAPSHOT")
 
+
     modImplementation("curse.maven:cobblemon-687131:6125079")
 }
 

@@ -4,6 +4,8 @@ import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueSession
 import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueText
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
 import net.minecraft.network.chat.Component
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -11,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap
 object DialogueManager {
     val startNode = object : DialogueNode {
         override val id = "start"
-        override val text = PhaseDialogueText(Arrays.asList(
+        override val text: Text<TextUnit> = PhaseDialogueText(Arrays.asList(
             ComponentTextUnit(Component.literal("你好！需要什么帮助吗？")),
             ComponentTextUnit(Component.literal("not really?")),
             ComponentTextUnit(Component.literal("no way!"))
@@ -54,7 +56,7 @@ object DialogueManager {
                     session.currentNode = nextNode
                     session.dialoguer.showDialogue(session.currentNode)
                 } else {
-                    session.dialoguer.closeDialogue()
+                    exitDialogue(session.dialoguer)
                 }
             }
             is DialogueActionResult.Execute -> result.command.run()

@@ -1,15 +1,12 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue.test
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.ConsoleDialoguer
-import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.*
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.SimpleDialogueText
 import net.minecraft.network.chat.Component
-import org.spongepowered.asm.mixin.MixinEnvironment.Phase
-import java.util.Arrays
-import java.util.Scanner
+import java.util.*
 
 val startNode = object : DialogueNode {
     override val id = "start"
@@ -17,7 +14,7 @@ val startNode = object : DialogueNode {
         ComponentTextUnit(Component.literal("你好！需要什么帮助吗？")),
         ComponentTextUnit(Component.literal("not really?")),
         ComponentTextUnit(Component.literal("no way!"))
-        ))
+    ))
     override val options = listOf(
         DialogueOption(Component.literal("关于任务...")) {
             DialogueActionResult.Advance("quest_info")
@@ -51,7 +48,6 @@ val questNode = object : DialogueNode {
         get() = TODO("Not yet implemented")
 }
 
-
 fun main() {
 
     val simpleSelector = DialogueRootSelector { playerData->
@@ -80,4 +76,3 @@ fun main() {
 //    DialogueManager.selectOption(ConsoleDialoguer.id, 1)
 
 }
-

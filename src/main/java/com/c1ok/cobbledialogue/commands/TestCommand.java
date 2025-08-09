@@ -23,7 +23,7 @@ public class TestCommand extends Subcommand {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
-        return Commands.literal("test")
+        return Commands.literal("start3223")
                 .requires(source -> source.hasPermission(4)) // Requires operator permission level
                 .then(Commands.argument("player", EntityArgument.player())
                     .then(Commands.argument("name", StringArgumentType.string())

@@ -13,6 +13,8 @@ open class SimpleDialogueTree(private val rootid: DialogueRootSelector, val node
     }
 
     override fun getNodeById(id: String): DialogueNode? {
-        return nodes.first { it.id == id }
+        return kotlin.runCatching {
+            return@runCatching nodes.first { it.id == id }
+        }.getOrNull()
     }
 }

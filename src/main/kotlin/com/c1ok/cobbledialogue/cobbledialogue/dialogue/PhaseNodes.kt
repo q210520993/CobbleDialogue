@@ -1,14 +1,15 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.DialogueText
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.SimpleDialogueText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueBuilder
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
 import net.minecraft.network.chat.Component
 
 val town1_mayor_start_argue = object : DialogueNode {
     override val id: String
         get() = "start_argue"
-    override val text: DialogueText<TextUnit>
+    override val text: Text<TextUnit>
         get() = PhaseDialogueBuilder().addText(
             "Mayor: I don't care what you think, I'm the mayor here and I make the rules!"
         ).addText(
@@ -40,8 +41,6 @@ val town1_mayor_start_argue = object : DialogueNode {
             )
         )
     override val result: DialogueActionResult
-        get() = DialogueActionResult.Execute{
-
-        }
+        get() = DialogueActionResult.Exit
 
 }

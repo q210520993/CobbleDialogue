@@ -1,13 +1,12 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.DialogueText
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
-import net.minecraft.network.chat.Component
 
 interface DialogueNode {
     val id: String
     // 主文本
-    val text: DialogueText<TextUnit>
+    val text: Text<TextUnit>
     // 选项
     val options: List<DialogueOption>
     //结束触发
