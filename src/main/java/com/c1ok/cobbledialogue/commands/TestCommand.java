@@ -1,7 +1,7 @@
 package com.c1ok.cobbledialogue.commands;
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer;
-import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDialoguer;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.Dialoguer;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.PlayerDialoguer;
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.*;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;

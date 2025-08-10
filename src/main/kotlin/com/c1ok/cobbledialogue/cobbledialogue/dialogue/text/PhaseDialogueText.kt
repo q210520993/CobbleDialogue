@@ -1,6 +1,6 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue.text
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.Dialoguer
 import kotlinx.coroutines.delay
 import net.minecraft.network.chat.Component
 import java.util.ArrayList

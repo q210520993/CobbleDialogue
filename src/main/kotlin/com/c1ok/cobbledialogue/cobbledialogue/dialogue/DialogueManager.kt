@@ -1,7 +1,5 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueSession
-import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text

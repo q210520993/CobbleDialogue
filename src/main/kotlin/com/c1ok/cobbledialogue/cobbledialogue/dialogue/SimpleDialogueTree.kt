@@ -1,7 +1,5 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.Dialoguer
-
 fun interface DialogueRootSelector {
     fun select(dialoguer: Dialoguer): String
 }

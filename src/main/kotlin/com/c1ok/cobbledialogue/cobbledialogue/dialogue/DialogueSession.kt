@@ -1,7 +1,4 @@
-package com.c1ok.cobbledialogue.cobbledialogue.data
-
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueNode
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueTree
+package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
 data class DialogueSession(
     val dialoguer: Dialoguer,  // 对话终端

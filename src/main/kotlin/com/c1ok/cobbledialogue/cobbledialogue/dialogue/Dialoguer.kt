@@ -1,16 +1,15 @@
-package com.c1ok.cobbledialogue.cobbledialogue.data
+package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueNode
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.CoroutineText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.DialogueText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.player.Player
 import java.util.*
 
 interface Dialoguer {
@@ -21,7 +20,7 @@ interface Dialoguer {
     fun closeDialogue() // 关闭对话
 }
 
-class PlayerDialoguer(val player: ServerPlayer) : Dialoguer {
+class PlayerDialoguer(val player: Player) : Dialoguer {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val origin = this
     override val id: UUID = player.uuid
