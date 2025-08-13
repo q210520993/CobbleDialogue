@@ -1,11 +1,13 @@
 package com.c1ok.cobbledialogue.cobbledialogue
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager
 import com.c1ok.cobbledialogue.commands.DialogueCommand
-import com.c1ok.cobbledialogue.commands.TestCommand
 import com.c1ok.cobbledialogue.commands.Subcommand
+import com.c1ok.cobbledialogue.commands.TestCommand
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
-import java.util.Arrays
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import java.util.*
 
 
 class Cobbledialogue : ModInitializer {
@@ -26,5 +28,11 @@ class Cobbledialogue : ModInitializer {
                 Arrays.asList(TestCommand()) as List<Subcommand>?
             ).register(dispatcher)
         }
+        DialogueDataManager.loadDialogue()
+        // 监听服务器停止事件
+        ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
+            DialogueDataManager.saveDialogue()
+        })
     }
+
 }

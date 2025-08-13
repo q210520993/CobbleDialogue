@@ -16,3 +16,18 @@ open class SimpleDialogueTree(private val rootid: DialogueRootSelector, val node
         }.getOrNull()
     }
 }
+
+object TestS : DialogueRootSelector {
+    override fun select(dialoguer: Dialoguer): String {
+        return "start_argue"
+    }
+}
+
+object TestDialogue : SimpleDialogueTree(TestS, listOf(
+    town1_mayor_start_argue,
+    town1_village_chief_opening,
+    player_request,
+    village_chief_response_1,
+    player_rebuttal_1,
+    village_chief_counter_2
+))

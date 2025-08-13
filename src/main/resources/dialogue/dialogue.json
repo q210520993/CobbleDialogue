@@ -1,0 +1,9 @@
+{
+  "id": "town1_mayor_start_argue",
+  "dialogues": [
+    "§bMayor: §6I don't care what you think, I'm the mayor here and I make the rules!",
+    "§bYou: §aBut Mayor, you can't just ignore the law!",
+    "§bMayor: §6The law? Ha! I make the law!",
+    "§bYou: §aThis is ridiculous, we need to talk about this!"
+  ],
+}

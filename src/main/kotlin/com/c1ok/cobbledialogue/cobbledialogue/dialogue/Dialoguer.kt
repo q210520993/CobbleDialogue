@@ -23,11 +23,13 @@ interface Dialoguer {
 class PlayerDialoguer(val player: Player) : Dialoguer {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val origin = this
+    private var currentNode: DialogueNode? = null
     override val id: UUID = player.uuid
     override var active: Boolean = false
     override fun showDialogue(node: DialogueNode) {
         active = true
         scope.launch {
+            currentNode = node
             when(val text = node.text) {
                 is CoroutineText -> {
                     text.dialogue(origin)
@@ -36,7 +38,6 @@ class PlayerDialoguer(val player: Player) : Dialoguer {
                 is DialogueText -> {
                     text.dialogue(origin)
                 }
-
             }
             // 再次判断，如果对话被取消，则直接任务取消
             if (!active) return@launch
@@ -45,6 +46,7 @@ class PlayerDialoguer(val player: Player) : Dialoguer {
             }
         }.invokeOnCompletion {
             closeDialogue()
+            currentNode = null
         }
     }
 

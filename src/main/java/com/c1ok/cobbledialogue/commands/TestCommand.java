@@ -23,7 +23,7 @@ public class TestCommand extends Subcommand {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
-        return Commands.literal("start3223")
+        return Commands.literal("start")
                 .requires(source -> source.hasPermission(4)) // Requires operator permission level
                 .then(Commands.argument("player", EntityArgument.player())
                     .then(Commands.argument("name", StringArgumentType.string())
@@ -39,13 +39,7 @@ public class TestCommand extends Subcommand {
 
             DialogueNode node = DialogueManager.INSTANCE.getDialogueStorage().getDialogue(name);
 
-            DialogueManager.INSTANCE.startSession(new PlayerDialoguer(target),new SimpleDialogueTree(new DialogueRootSelector() {
-                @NotNull
-                @Override
-                public String select(@NotNull Dialoguer dialoguer) {
-                    return "start_argue";
-                }
-            }, Arrays.asList(PhaseNodesKt.getTown1_mayor_start_argue())));
+            DialogueManager.INSTANCE.startSession(new PlayerDialoguer(target), TestDialogue.INSTANCE);
 
             return 1;
         } catch (Exception e) {
