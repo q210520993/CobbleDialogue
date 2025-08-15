@@ -3,7 +3,7 @@ package com.c1ok.cobbledialogue.cobbledialogue.task
 import net.minecraft.world.entity.player.Player
 import java.util.function.Consumer
 
-data class Task(
+open class Task(
     val id: String,
     val name: String,
     val description: String,

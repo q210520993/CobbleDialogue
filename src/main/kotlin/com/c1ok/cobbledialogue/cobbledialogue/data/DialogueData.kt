@@ -20,7 +20,7 @@ object DialogueDataManager {
 
     val dialogues: MutableMap<String, DialogueData> = ConcurrentHashMap()
     val originDialogues: MutableMap<String, DialogueData> = ConcurrentHashMap()
-    // 但是反序列化出来是这样的，Map<String,String>
+
     fun loadDialogue() {
         OriginDialogueData.register()
         println(Utils.readFileSync(CONFIG_FILE_PATH, CONFIG_FILE))
