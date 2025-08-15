@@ -1,5 +1,9 @@
 package com.c1ok.cobbledialogue.cobbledialogue.dialogue
 
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.nodes.TownOneArgue.player_request
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.nodes.TownOneArgue.town1_mayor_start_argue
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.nodes.TownOneArgue.town1_village_chief_opening
+
 fun interface DialogueRootSelector {
     fun select(dialoguer: Dialoguer): String
 }
@@ -27,7 +31,4 @@ object TestDialogue : SimpleDialogueTree(TestS, listOf(
     town1_mayor_start_argue,
     town1_village_chief_opening,
     player_request,
-    village_chief_response_1,
-    player_rebuttal_1,
-    village_chief_counter_2
 ))

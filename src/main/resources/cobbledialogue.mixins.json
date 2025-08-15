@@ -4,6 +4,7 @@
   "package": "com.c1ok.cobbledialogue.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "EntityMixin",
     "LivingEntityMixin"
   ],
   "injectors": {

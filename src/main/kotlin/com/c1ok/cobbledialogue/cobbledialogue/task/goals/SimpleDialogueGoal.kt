@@ -5,8 +5,7 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.EventData
 import com.c1ok.cobbledialogue.cobbledialogue.task.TaskGoal
 
 class SimpleDialogueGoal(val node: DialogueNode): TaskGoal {
-    var isComplete = false
-        private set
+    private var isComplete = false
 
     override fun isComplete(): Boolean {
         return isComplete

@@ -4,6 +4,7 @@ import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,5 +21,11 @@ public class LivingEntityMixin {
             ci.cancel();
             DialogueManager.INSTANCE.selectOption(player.getUUID(), Integer.parseInt(outgoingChatMessage.content().getString()));
         }
+    }
+
+    @Inject(method = "resetStat", at = @At("HEAD"), cancellable = true)
+    private void onSendChatMessageHead(Stat<?> stat, CallbackInfo ci) {
+        ServerPlayer player = (ServerPlayer)(Object)this;
+        System.out.println(stat.toString());
     }
 }
