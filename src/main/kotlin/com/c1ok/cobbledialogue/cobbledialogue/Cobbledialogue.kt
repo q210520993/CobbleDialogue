@@ -1,5 +1,6 @@
 package com.c1ok.cobbledialogue.cobbledialogue
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.CONFIG_FILE_PATH
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager
 import com.c1ok.cobbledialogue.commands.DialogueCommand
 import com.c1ok.cobbledialogue.commands.Subcommand
@@ -7,6 +8,7 @@ import com.c1ok.cobbledialogue.commands.TestCommand
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import java.nio.file.Path
 import java.util.*
 
 
@@ -29,7 +31,11 @@ class Cobbledialogue : ModInitializer {
             ).register(dispatcher)
         }
         DialogueDataManager.loadDialogue()
-        // 监听服务器停止事件
+        val file = Path.of(CONFIG_FILE_PATH).toFile()
+        if (!file.exists()) {
+            DialogueDataManager.saveDialogue()
+        }
+
         ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
             DialogueDataManager.saveDialogue()
         })

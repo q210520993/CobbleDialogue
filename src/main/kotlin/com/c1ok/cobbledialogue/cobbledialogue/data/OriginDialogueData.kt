@@ -2,7 +2,6 @@ package com.c1ok.cobbledialogue.cobbledialogue.data
 
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager.addDialogueData
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager.addOriginDialogueData
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.nodes.TownOneZhang
 
 /**
  * Dialogue格式
