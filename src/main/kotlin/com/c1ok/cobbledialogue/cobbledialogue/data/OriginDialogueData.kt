@@ -47,9 +47,6 @@ object OriginDialogueData {
                 "§7Leave the argument quietly."              // 灰色选项，中立退出
             )
         )
-        addDialogueData(village_chief_intro)
-        addOriginDialogueData(village_chief_intro)
-
         // 创建并注册对话：player_request
         val player_request = DialogueData(
             id = "player_request",
