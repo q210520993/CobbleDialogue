@@ -16,10 +16,10 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.goals.DialogueEvent
 
 object TownOneZhang {
 
-    val oldZhangIntroNode = object : DialogueNode {
+    val town1_zhang_intro_1 = object : DialogueNode {
         override val id: String
             get() = "old_zhang_intro"
-        val dialogueData = DialogueDataManager.getDialogue("old_zhang_intro_plan")
+        val dialogueData = DialogueDataManager.getDialogue("town1_zhang_intro_1")
         override val text: Text<TextUnit>
             get() = PhaseDialogueBuilder().addText(
                 dialogueData
@@ -29,7 +29,7 @@ object TownOneZhang {
                 DialogueOption(
                     text = dialogueData.options[0],
                     action = { session ->
-                        val result = DialogueActionResult.Advance("old_zhang_plan")
+                        val result = DialogueActionResult.Advance("aunt_chang_encounter")
                         val player = session.dialoguer as? PlayerDialoguer ?: return@DialogueOption result
                         TaskManager.updateTask(player.player, DialogueEvent(session), "findZhang")
                         result
@@ -40,9 +40,9 @@ object TownOneZhang {
             get() = DialogueActionResult.Exit
     }
 
-    val auntChangEncounterNode = object : DialogueNode {
+    val town1_chang_encounter_1 = object : DialogueNode {
         override val id: String get() = "aunt_chang_encounter"
-        val dialogueData = DialogueDataManager.getDialogue("aunt_chang_encounter")
+        val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_1")
         override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
         override val options: List<DialogueOption> get() = listOf(
             DialogueOption(
@@ -58,9 +58,9 @@ object TownOneZhang {
     }
 
 
-    val auntChangFinalConditionsNode = object : DialogueNode {
+    val town1_chang_encounter_2 = object : DialogueNode {
         override val id: String get() = "aunt_chang_final_conditions"
-        val dialogueData = DialogueDataManager.getDialogue("aunt_chang_final_conditions")
+        val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_2")
         override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
         override val options: List<DialogueOption> get() = listOf(
             DialogueOption(
@@ -75,8 +75,8 @@ object TownOneZhang {
     }
 
     fun registerOrigin() {
-        val old_zhang_intro_plan = DialogueData(
-            id = "old_zhang_intro_plan",
+        val town1_zhang_intro_1  = DialogueData(
+            id = "town1_zhang_intro_1 ",
             dialogues = listOf(
                 "§bPlayer: §aGrandpa! The village chief won’t agree! We tried everything, but he still kicked us out!",
                 """§bOld Zhang: §3How many times has this been now? How many times this month? I’ve told you, 
@@ -102,11 +102,11 @@ object TownOneZhang {
                 "§aChoose a Pokémon."
             )
         )
-        addDialogueData(old_zhang_intro_plan)
-        addOriginDialogueData(old_zhang_intro_plan)
+        addDialogueData(town1_zhang_intro_1)
+        addOriginDialogueData(town1_zhang_intro_1)
 
         val aunt_chang_encounter = DialogueData(
-            id = "aunt_chang_encounter",
+            id = "town1_chang_encounter_1",
             dialogues = listOf(
                 """§bOld Zhang: §3Otherwise, Aunt Chang will just make you stay for dinner again. 
         You’re not even embarrassed, coming here every day to mooch off us!""",
@@ -128,7 +128,7 @@ object TownOneZhang {
         addOriginDialogueData(aunt_chang_encounter)
 
         val aunt_chang_final_conditions = DialogueData(
-            id = "aunt_chang_final_conditions",
+            id = "town1_chang_encounter_2",
             dialogues = listOf(
                 """§bAunt Chang: §3You want to borrow it, huh? Fine! But my Pokémon rental company doesn’t make bad deals. 
         You can take the Charmander, but it won’t come free.""",
