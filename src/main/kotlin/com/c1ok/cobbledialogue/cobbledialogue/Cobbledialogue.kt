@@ -31,7 +31,7 @@ class Cobbledialogue : ModInitializer {
         DialogueDataManager.loadDialogue()
         // 监听服务器停止事件
         ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
-            DialogueDataManager.saveDialogue()
+          //  DialogueDataManager.saveDialogue()
         })
     }
 
