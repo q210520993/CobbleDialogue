@@ -6,6 +6,7 @@ import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueNode
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueOption
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.PlayerDialoguer
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueBuilder
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ShiftDialogueBuilder
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.task.TaskManager
@@ -17,7 +18,7 @@ object TownOneArgue {
             get() = "start_argue"
         val dialogueData = DialogueDataManager.getDialogue("town1_mayor_start_argue")
         override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(
+            get() = ShiftDialogueBuilder().addText(
                 dialogueData
             ).build()
         override val options: List<DialogueOption>
@@ -44,7 +45,7 @@ object TownOneArgue {
             get() = "village_chief_opening"
         val dialogueData = DialogueDataManager.getDialogue("town1_village_chief_opening")
         override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            get() = ShiftDialogueBuilder().addText(dialogueData).build()
         override val options: List<DialogueOption>
             get() = listOf(
                 DialogueOption(
@@ -63,7 +64,7 @@ object TownOneArgue {
             get() = "player_request"
         val dialogueData = DialogueDataManager.getDialogue("village_chief_intro")
         override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(
+            get() = ShiftDialogueBuilder().addText(
                 dialogueData
             ).build()
         override val options: List<DialogueOption>

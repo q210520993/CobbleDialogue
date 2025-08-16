@@ -37,7 +37,7 @@ public class TestCommand extends Subcommand {
             ServerPlayer target = EntityArgument.getPlayer(context, "player");
             String name = StringArgumentType.getString(context, "name");
 
-            DialogueNode node = DialogueManager.INSTANCE.getDialogueStorage().getDialogue(name);
+         //   DialogueNode node = DialogueManager.INSTANCE.getDialogueStorage().getDialogue(name);
 
             DialogueManager.INSTANCE.startSession(new PlayerDialoguer(target), TestDialogue.INSTANCE);
 

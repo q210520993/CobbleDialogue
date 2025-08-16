@@ -1,6 +1,8 @@
 package com.c1ok.cobbledialogue.mixin;
 
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueSession;
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ShiftDialogueText;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +32,13 @@ public class EntityMixin {
         if(entity instanceof ServerPlayer player) {
             this.crouched = true;
             //TODO
-            System.out.println("asdassadsa");
+            DialogueSession session = DialogueManager.INSTANCE.getActiveSessions().get(player.getUUID());
+            if (session==null) {
+                return;
+            }
+            if(session.getCurrentNode().getText() instanceof ShiftDialogueText text){
+                text.setCrouched(true);
+            }
         }
     }
 }
