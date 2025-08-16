@@ -12,7 +12,13 @@ class BlockBreakGoal(
 
     override fun isComplete(): Boolean = currentAmount >= targetAmount
 
-    override fun progress(): String = "挖掘目标: $currentAmount/$targetAmount (${blockType.name})"
+    override val goal: Int = 10
+    override val name: String = "dig"
+    override var progress: Int = 0
+
+    override fun getProgressInformation(): String {
+        return "挖掘目标: $currentAmount/$targetAmount (${blockType.name})"
+    }
 
     override fun update(data: EventData) {
         if (data !is BlockEventData) {

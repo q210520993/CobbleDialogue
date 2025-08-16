@@ -1,21 +1,46 @@
 package com.c1ok.cobbledialogue.cobbledialogue.task
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
 import java.util.concurrent.ConcurrentHashMap
 
 object TaskManager {
-    private val playerTasks: MutableMap<Player, MutableMap<String, Task>> = ConcurrentHashMap()
+    val playerTasks: MutableMap<Player, MutableMap<String, Task>> = ConcurrentHashMap()
+    val tasks: MutableMap<String, TaskCreator> = ConcurrentHashMap<String, TaskCreator>()
 
     // 获取玩家的任务列表
     fun getTasks(player: Player): List<Task> {
         return playerTasks[player]?.values?.toList() ?: emptyList()
     }
 
+    // 注册任务
+    fun registerTask(task: TaskCreator) {
+        tasks[task.id] = task
+    }
+
+    fun unregisterTask(task: Task) {
+        playerTasks.values.forEach { map->
+            map.remove(task.id)
+        }
+        tasks.remove(task.id)
+    }
+
     // 添加任务
     fun addTask(player: Player, task: Task) {
         val tasks = playerTasks.computeIfAbsent(player) { ConcurrentHashMap() }
+        if (tasks.containsValue(task)) {
+            println("不可重复添加同一任务")
+            return
+        }
         tasks[task.id] = task
+        val data = PlayerDataManager.getPlayerData(player.uuid) ?: return
+        data.tasks.values.first { it.id == task.id }.executionCount++
+        data.tasks.values
+    }
+
+    fun addTask(player: Player, id: String) {
+
     }
 
     // 更新任务状态
