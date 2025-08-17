@@ -1,5 +1,6 @@
 package com.c1ok.cobbledialogue.cobbledialogue.task
 
+import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerData
 import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
@@ -27,16 +28,15 @@ object TaskManager {
     }
 
     // 添加任务
-    fun addTask(player: Player, task: Task) {
+    fun addTask(player: Player, taskCreator: TaskCreator) {
         val tasks = playerTasks.computeIfAbsent(player) { ConcurrentHashMap() }
-        if (tasks.containsValue(task)) {
+        val task = taskCreator.createTask(player)
+        if (tasks.containsKey(task.id)) {
             println("不可重复添加同一任务")
             return
         }
         tasks[task.id] = task
-        val data = PlayerDataManager.getPlayerData(player.uuid) ?: return
-        data.tasks.values.first { it.id == task.id }.executionCount++
-        data.tasks.values
+        PlayerDataManager.updatePlayerTask(player.uuid, task)
     }
 
     fun addTask(player: Player, id: String) {
@@ -60,6 +60,8 @@ object TaskManager {
         player.displayClientMessage(Component.literal("${task.name} 已完成！"), false)
         task.reward.accept(player)
         playerTasks[player]?.remove(task.id)
+        val data = PlayerDataManager.getPlayerData(player.uuid) ?: return
+        data.tasks[task.id]
     }
 
 }

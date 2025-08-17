@@ -8,5 +8,5 @@ import java.util.function.Consumer
 
 class AfterArgue(consumer: Consumer<Player>): Task(
     "findZhang", "findZhang", "findZhangAndDialogue",
-    goals = listOf(SimpleDialogueGoal(TownOneZhang.oldZhangIntroNode)), consumer
+    goals = listOf(SimpleDialogueGoal(TownOneZhang.town1_zhang_intro_1)), consumer
 )

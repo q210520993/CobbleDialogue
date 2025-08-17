@@ -4,8 +4,11 @@ import com.c1ok.cobbledialogue.Utils
 import com.c1ok.cobbledialogue.cobbledialogue.serializer.LocalDateTimeTypeAdapter
 import com.c1ok.cobbledialogue.cobbledialogue.serializer.UUIDTypeAdapter
 import com.c1ok.cobbledialogue.cobbledialogue.task.Task
+import com.c1ok.cobbledialogue.cobbledialogue.task.TaskCreator
+import com.c1ok.cobbledialogue.cobbledialogue.task.TaskManager
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import net.minecraft.server.MinecraftServer
 import net.minecraft.world.entity.player.Player
 import java.time.LocalDateTime
 import java.util.*
@@ -31,23 +34,46 @@ object PlayerDataManager {
         deserializedData.entries.forEach {
             datas[it.key] = it.value
         }
-        datas.values.forEach { value ->
-            value.tasks.forEach { task ->
-            }
+    }
+
+    fun loadPlayerData(player: Player) {
+        val data = datas[player.uuid] ?: return
+        TaskManager.playerTasks[player] ?: run {
+            TaskManager.playerTasks[player] = ConcurrentHashMap()
+        }
+        val tasks = TaskManager.playerTasks[player]!!
+        data.tasks.values.forEach {
+            val creator = TaskManager.tasks[it.id] ?: return@forEach
+            val task = TaskData.createTask(player, creator) ?: return@forEach
+            tasks[task.id] = task
         }
     }
 
     fun addPlayerData(player: Player) {
-        datas.putIfAbsent(player.uuid, PlayerData(player.uuid, ConcurrentHashMap(), 0, LocalDateTime.now()))
+        datas.putIfAbsent(player.uuid, PlayerData(player.uuid, ConcurrentHashMap(), LocalDateTime.now()))
     }
 
     fun getPlayerData(uuid: UUID): PlayerData? {
         return datas[uuid]
     }
 
+    fun getPlayerTaskData(uuid: UUID, task: Task): TaskData {
+        return getPlayerData(uuid)!!.tasks.putIfAbsent(task.id, TaskData.of(task))!!
+    }
+
     fun updatePlayerTask(uuid: UUID, task: Task) {
         getPlayerData(uuid)?.let { playerData ->
-            playerData.tasks[task.id]?.executionCount
+            playerData.tasks.putIfAbsent(task.id, TaskData.of(task))
+            getPlayerTaskData(uuid, task).executionCount++
+        }
+    }
+
+    fun onCompletedTask(uuid: UUID, task: Task) {
+        getPlayerData(uuid)?.let {
+            if (it.tasks[task.id] == null) {
+                getPlayerTaskData(uuid, task).successCount++
+                getPlayerTaskData(uuid, task).lastCompleted = LocalDateTime.now()
+            }
         }
     }
 
@@ -61,7 +87,6 @@ object PlayerDataManager {
 data class PlayerData(
     val playerId: UUID,                      // 玩家唯一标识
     val tasks: MutableMap<String, TaskData>,         // 任务信息（键为任务 ID）
-    val totalTasksExecuted: Int,              // 所有任务执行次数总和
     val lastUpdated: LocalDateTime            // 数据最后更新时间
 )
 
@@ -71,8 +96,42 @@ data class TaskData(
     var successCount: Int = 0,                // 任务成功次数（默认值为 0）
     var failureCount: Int = 0,                // 任务失败次数（默认值为 0）
     var lastCompleted: LocalDateTime? = null,
-    var taskDoingData: TaskDoingData
-)
+    var taskDoingData: TaskDoingData? = null
+) {
+    companion object {
+        // 用于生成一个第一次执行的taskData
+        fun of(task: Task): TaskData {
+            val goals: MutableList<GoalData> = mutableListOf()
+            task.goals.forEach {
+                val data = GoalData(
+                    it.name,
+                    it.progress
+                )
+                goals.add(data)
+            }
+            return TaskData(
+                task.id,
+                1,
+                0,
+                0,
+                null,
+                null
+            )
+        }
+
+        fun createTask(player: Player, task_: TaskCreator): Task? {
+            val task = task_.createTask(player)
+            val data = PlayerDataManager.getPlayerTaskData(player.uuid, task)
+            if (data.taskDoingData == null) return null
+            data.taskDoingData!!.goals.forEach {
+                val goal = task.getGoal(it.name) ?: return@forEach
+                goal.progress = it.progress
+            }
+            return task
+        }
+
+    }
+}
 
 data class TaskDoingData(
     val id: String,                         // 任务名称

@@ -11,6 +11,10 @@ open class Task(
     val reward: Consumer<Player>     // 完成后触发
 ) {
 
+    fun getGoal(name: String): TaskGoal? {
+        return goals.firstOrNull { it.name == name }
+    }
+
     fun isComplete(): Boolean = goals.all { it.isComplete() }
 
     fun progressInformation(): String = goals.joinToString("\n") { it.getProgressInformation() }
