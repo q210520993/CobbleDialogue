@@ -1,7 +1,7 @@
 package com.c1ok.cobbledialogue.cobbledialogue.task
 
-import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerData
 import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
+import com.c1ok.cobbledialogue.cobbledialogue.task.tasks.AfterArgueCreator
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Player
 import java.util.concurrent.ConcurrentHashMap
@@ -9,6 +9,11 @@ import java.util.concurrent.ConcurrentHashMap
 object TaskManager {
     val playerTasks: MutableMap<Player, MutableMap<String, Task>> = ConcurrentHashMap()
     val tasks: MutableMap<String, TaskCreator> = ConcurrentHashMap<String, TaskCreator>()
+
+    // 将所有taskcreator放到这里注册
+    fun registerTasks() {
+        registerTask(AfterArgueCreator)
+    }
 
     // 获取玩家的任务列表
     fun getTasks(player: Player): List<Task> {
@@ -37,10 +42,6 @@ object TaskManager {
         }
         tasks[task.id] = task
         PlayerDataManager.updatePlayerTask(player.uuid, task)
-    }
-
-    fun addTask(player: Player, id: String) {
-
     }
 
     // 更新任务状态
