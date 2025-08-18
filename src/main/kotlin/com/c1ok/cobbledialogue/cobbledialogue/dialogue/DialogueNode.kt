@@ -11,4 +11,9 @@ interface DialogueNode {
     val options: List<DialogueOption>
     //结束触发
     val result:DialogueActionResult
+
+    fun getOption(id: String): DialogueOption? {
+        return options.firstOrNull { it.id == id }
+    }
+
 }

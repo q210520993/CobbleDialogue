@@ -4,10 +4,8 @@ import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueData
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager.addDialogueData
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager.addOriginDialogueData
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueActionResult
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueNode
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueOption
-import com.c1ok.cobbledialogue.cobbledialogue.dialogue.PlayerDialoguer
+import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.*
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueBuilder
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
@@ -15,6 +13,7 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.TaskManager
 import com.c1ok.cobbledialogue.cobbledialogue.task.goals.DialogueEvent
 
 object TownOneZhang {
+
 
     val town1_zhang_intro_1 = object : DialogueNode {
         override val id: String
@@ -27,6 +26,7 @@ object TownOneZhang {
         override val options: List<DialogueOption>
             get() = listOf(
                 DialogueOption(
+                    id = "option",
                     text = dialogueData.options[0],
                     action = { session ->
                         val result = DialogueActionResult.Advance("aunt_chang_encounter")
@@ -46,6 +46,7 @@ object TownOneZhang {
         override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
         override val options: List<DialogueOption> get() = listOf(
             DialogueOption(
+                id = "option",
                 text = dialogueData.options[0],
                 action = { session ->
                     // 每一个Todo 都是任务插入的地方
@@ -64,6 +65,7 @@ object TownOneZhang {
         override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
         override val options: List<DialogueOption> get() = listOf(
             DialogueOption(
+                id = "option",
                 text = dialogueData.options[0],
                 action = { session ->
                     // TODO 接受条件并完成对话
@@ -73,6 +75,13 @@ object TownOneZhang {
         )
         override val result: DialogueActionResult get() = DialogueActionResult.Exit
     }
+
+    val tree = SimpleDialogueTree(DialogueRootSelector {
+        val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
+        val taskData = data.tasks.get("findZhang") ?: return@DialogueRootSelector ""
+        if (taskData.taskDoingData == null) return@DialogueRootSelector ""
+        return@DialogueRootSelector "old_zhang_intro"
+    }, listOf(town1_zhang_intro_1, town1_chang_encounter_1, town1_chang_encounter_2))
 
     fun registerOrigin() {
         val town1_zhang_intro_1  = DialogueData(

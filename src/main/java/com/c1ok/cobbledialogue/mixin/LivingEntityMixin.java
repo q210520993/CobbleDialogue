@@ -16,16 +16,8 @@ public class LivingEntityMixin {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessageHead(OutgoingChatMessage outgoingChatMessage, boolean bl, ChatType.Bound bound, CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer)(Object)this;
-        System.out.println(outgoingChatMessage.content().getString());
         if (DialogueManager.INSTANCE.getActiveSessions().containsKey(player.getUUID())) {
             ci.cancel();
-            DialogueManager.INSTANCE.selectOption(player.getUUID(), Integer.parseInt(outgoingChatMessage.content().getString()));
         }
-    }
-
-    @Inject(method = "resetStat", at = @At("HEAD"), cancellable = true)
-    private void onSendChatMessageHead(Stat<?> stat, CallbackInfo ci) {
-        ServerPlayer player = (ServerPlayer)(Object)this;
-        System.out.println(stat.toString());
     }
 }

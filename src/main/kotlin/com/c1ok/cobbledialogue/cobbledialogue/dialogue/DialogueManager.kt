@@ -4,6 +4,7 @@ import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.ComponentTextUnit
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.PhaseDialogueText
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.Text
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
+import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -17,13 +18,13 @@ object DialogueManager {
             ComponentTextUnit(Component.literal("no way!"))
         ))
         override val options = listOf(
-            DialogueOption(Component.literal("关于任务...")) {
+            DialogueOption("option1", "关于任务...") {
                 DialogueActionResult.Advance("quest_info")
             },
-            DialogueOption(Component.literal("交易")) {
+            DialogueOption("option2", "交易") {
                 DialogueActionResult.Execute { /*TODO OpenTrade*/ }
             },
-            DialogueOption(Component.literal("再见")) {
+            DialogueOption("option3","再见") {
                 DialogueActionResult.Exit
             }
         )
@@ -40,11 +41,11 @@ object DialogueManager {
         dialoguer.showDialogue(rootNode) // 触发终端渲染
     }
 
-    fun selectOption(dialoguerId: UUID, optionIndex: Int) {
+    fun selectOption(dialoguerId: UUID, optionIndex: String) {
         val session = activeSessions[dialoguerId] ?: return
         val node = session.currentNode
-        if (optionIndex < 0 || optionIndex >= node.options.size) return
-        val result = node.options[optionIndex].action.apply(session)
+        val option = node.getOption(optionIndex) ?: return
+        val result = option.action.apply(session)
 
         when (result) {
             is DialogueActionResult.Advance -> {
