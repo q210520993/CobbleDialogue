@@ -5,8 +5,10 @@ import com.c1ok.cobbledialogue.cobbledialogue.data.CONFIG_FILE_PATH
 import com.c1ok.cobbledialogue.cobbledialogue.data.DATA_FILE
 import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager
 import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
+import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager
 import com.c1ok.cobbledialogue.cobbledialogue.task.TaskManager
 import com.c1ok.cobbledialogue.commands.DialogueCommand
+import com.c1ok.cobbledialogue.commands.TestCommand
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
@@ -46,8 +48,9 @@ class Cobbledialogue : ModInitializer {
         CommandRegistrationCallback.EVENT.register{ dispatcher, registryAccess, environment ->
             DialogueCommand(
                 listOf("dl"),
-                listOf(Select)).register(dispatcher)
+                listOf(Select, TestCommand())).register(dispatcher)
         }
+        DialogueManager.registerAll()
     }
 
 }

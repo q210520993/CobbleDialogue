@@ -78,7 +78,7 @@ object TownOneZhang {
 
     val tree = SimpleDialogueTree(DialogueRootSelector {
         val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
-        val taskData = data.tasks.get("findZhang") ?: return@DialogueRootSelector ""
+        val taskData = data.tasks["findZhang"] ?: return@DialogueRootSelector ""
         if (taskData.taskDoingData == null) return@DialogueRootSelector ""
         return@DialogueRootSelector "old_zhang_intro"
     }, listOf(town1_zhang_intro_1, town1_chang_encounter_1, town1_chang_encounter_2))
