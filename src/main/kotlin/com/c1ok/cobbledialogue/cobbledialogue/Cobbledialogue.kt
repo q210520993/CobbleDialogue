@@ -23,10 +23,6 @@ class Cobbledialogue : ModInitializer {
 
     override fun onInitialize() {
 
-        DialogueDataManager.loadDialogue()
-        TaskManager.registerTasks()
-        PlayerDataManager.loadDatas()
-
         val configFile = Path.of(CONFIG_FILE_PATH).toFile()
         if (!configFile.exists()) {
             DialogueDataManager.saveDialogue()
@@ -35,6 +31,10 @@ class Cobbledialogue : ModInitializer {
         if (!data.exists()) {
             PlayerDataManager.saveDatas()
         }
+
+        DialogueDataManager.loadDialogue()
+        TaskManager.registerTasks()
+        PlayerDataManager.loadDatas()
 
         ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
             DialogueDataManager.saveDialogue()

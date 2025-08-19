@@ -15,28 +15,6 @@ object DialogueManager {
 
     val trees = ConcurrentHashMap<String, DialogueTree>()
 
-    val startNode = object : DialogueNode {
-        override val id = "start"
-        override val text: Text<TextUnit> = PhaseDialogueText(Arrays.asList(
-            ComponentTextUnit(Component.literal("你好！需要什么帮助吗？")),
-            ComponentTextUnit(Component.literal("not really?")),
-            ComponentTextUnit(Component.literal("no way!"))
-        ))
-        override val options = listOf(
-            DialogueOption("option1", "关于任务...") {
-                DialogueActionResult.Advance("quest_info")
-            },
-            DialogueOption("option2", "交易") {
-                DialogueActionResult.Execute { /*TODO OpenTrade*/ }
-            },
-            DialogueOption("option3","再见") {
-                DialogueActionResult.Exit
-            }
-        )
-        override val result: DialogueActionResult
-            get() = TODO("Not yet implemented")
-    }
-
     val activeSessions = ConcurrentHashMap<UUID, DialogueSession>()
 
     fun startSession(dialoguer: Dialoguer, tree: DialogueTree) {
