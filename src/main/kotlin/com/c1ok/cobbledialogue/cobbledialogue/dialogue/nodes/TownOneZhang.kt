@@ -15,73 +15,81 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.goals.DialogueEvent
 object TownOneZhang {
 
 
-    val town1_zhang_intro_1 = object : DialogueNode {
-        override val id: String
-            get() = "old_zhang_intro"
-        val dialogueData = DialogueDataManager.getDialogue("town1_zhang_intro_1")
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(
-                dialogueData
-            ).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
+    val town1_zhang_intro_1 by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "old_zhang_intro"
+            val dialogueData = DialogueDataManager.getDialogue("town1_zhang_intro_1")
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(
+                    dialogueData
+                ).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            val result = DialogueActionResult.Advance("aunt_chang_encounter")
+                            val player = session.dialoguer as? PlayerDialoguer ?: return@DialogueOption result
+                            TaskManager.updateTask(player.player, DialogueEvent(session), "findZhang")
+                            result
+                        }
+                    )
+                )
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
+    }
+
+    val town1_chang_encounter_1 by lazy {
+        object : DialogueNode {
+            override val id: String get() = "aunt_chang_encounter"
+            val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_1")
+            override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption> get() = listOf(
                 DialogueOption(
                     id = "option",
                     text = dialogueData.options[0],
                     action = { session ->
-                        val result = DialogueActionResult.Advance("aunt_chang_encounter")
-                        val player = session.dialoguer as? PlayerDialoguer ?: return@DialogueOption result
-                        TaskManager.updateTask(player.player, DialogueEvent(session), "findZhang")
-                        result
+                        // 每一个Todo 都是任务插入的地方
+                        // TODO 向 Aunt Chang 作进一步解释
+                        DialogueActionResult.Advance("aunt_chang_final_conditions")
                     }
                 )
             )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult get() = DialogueActionResult.Exit
+        }
     }
 
-    val town1_chang_encounter_1 = object : DialogueNode {
-        override val id: String get() = "aunt_chang_encounter"
-        val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_1")
-        override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption> get() = listOf(
-            DialogueOption(
-                id = "option",
-                text = dialogueData.options[0],
-                action = { session ->
-                    // 每一个Todo 都是任务插入的地方
-                    // TODO 向 Aunt Chang 作进一步解释
-                    DialogueActionResult.Advance("aunt_chang_final_conditions")
-                }
+
+    val town1_chang_encounter_2 by lazy {
+        object : DialogueNode {
+            override val id: String get() = "aunt_chang_final_conditions"
+            val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_2")
+            override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption> get() = listOf(
+                DialogueOption(
+                    id = "option",
+                    text = dialogueData.options[0],
+                    action = { session ->
+                        // TODO 接受条件并完成对话
+                        DialogueActionResult.Exit
+                    }
+                )
             )
-        )
-        override val result: DialogueActionResult get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult get() = DialogueActionResult.Exit
+        }
     }
 
-
-    val town1_chang_encounter_2 = object : DialogueNode {
-        override val id: String get() = "aunt_chang_final_conditions"
-        val dialogueData = DialogueDataManager.getDialogue("town1_chang_encounter_2")
-        override val text: Text<TextUnit> get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption> get() = listOf(
-            DialogueOption(
-                id = "option",
-                text = dialogueData.options[0],
-                action = { session ->
-                    // TODO 接受条件并完成对话
-                    DialogueActionResult.Exit
-                }
-            )
-        )
-        override val result: DialogueActionResult get() = DialogueActionResult.Exit
+    val tree by lazy {
+        SimpleDialogueTree(DialogueRootSelector {
+            val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
+            val taskData = data.tasks["findZhang"] ?: return@DialogueRootSelector ""
+            if (taskData.taskDoingData == null) return@DialogueRootSelector ""
+            return@DialogueRootSelector "old_zhang_intro"
+        }, listOf(town1_zhang_intro_1, town1_chang_encounter_1, town1_chang_encounter_2))
     }
-
-    val tree = SimpleDialogueTree(DialogueRootSelector {
-        val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
-        val taskData = data.tasks["findZhang"] ?: return@DialogueRootSelector ""
-        if (taskData.taskDoingData == null) return@DialogueRootSelector ""
-        return@DialogueRootSelector "old_zhang_intro"
-    }, listOf(town1_zhang_intro_1, town1_chang_encounter_1, town1_chang_encounter_2))
 
     fun registerOrigin() {
         val town1_zhang_intro_1  = DialogueData(

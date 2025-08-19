@@ -19,130 +19,142 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.tasks.AfterArgueCreator
 
 object TownOneArgue {
     // 对话节点 1: 村长开场（Opening Dialogue）
-    val town1_c_opening = object : DialogueNode {
-        override val id: String
-            get() = "town1_village_chief_opening_1"
-        val dialogueData = DialogueDataManager.getDialogue(id)
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
-                DialogueOption(
-                    id = "option_agree",
-                    text = dialogueData.options[0],
-                    action = { session ->
-                        // 选择与村长进一步争论
-                        DialogueActionResult.Advance("town1_village_chief_opening_2")
-                    }
-                ),
-                DialogueOption(
-                    id = "option_leave",
-                    text = dialogueData.options[1],
-                    action = { session ->
-                        // 玩家选择离开
-                        DialogueActionResult.Exit
-                    }
+    val town1_c_opening by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "town1_village_chief_opening_1"
+            val dialogueData = DialogueDataManager.getDialogue(id)
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option_agree",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            // 选择与村长进一步争论
+                            DialogueActionResult.Advance("town1_village_chief_opening_2")
+                        }
+                    ),
+                    DialogueOption(
+                        id = "option_leave",
+                        text = dialogueData.options[1],
+                        action = { session ->
+                            // 玩家选择离开
+                            DialogueActionResult.Exit
+                        }
+                    )
                 )
-            )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
     }
 
     // 对话节点 2: 玩家请求离开
-    val playerRequest = object : DialogueNode {
-        override val id: String
-            get() = "town1_village_chief_opening_2"
-        val dialogueData = DialogueDataManager.getDialogue(id)
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
-                DialogueOption(
-                    id = "option_wait",
-                    text = dialogueData.options[0],
-                    action = { session ->
-                        // 玩家等待村长回复
-                        DialogueActionResult.Advance("town1_village_chief_opening_3")
-                    }
+    val playerRequest by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "town1_village_chief_opening_2"
+            val dialogueData = DialogueDataManager.getDialogue(id)
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option_wait",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            // 玩家等待村长回复
+                            DialogueActionResult.Advance("town1_village_chief_opening_3")
+                        }
+                    )
                 )
-            )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
     }
 
     // 对话节点 3: 村长的第一次反应
-    val village_chief_response_1 = object : DialogueNode {
-        override val id: String
-            get() = "town1_village_chief_opening_3"
-        val dialogueData = DialogueDataManager.getDialogue(id)
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
-                DialogueOption(
-                    id = "option_argue",
-                    text = dialogueData.options[0],
-                    action = { session ->
-                        // 玩家选择争论
-                        DialogueActionResult.Advance("town1_village_chief_opening_4")
-                    }
+    val village_chief_response_1 by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "town1_village_chief_opening_3"
+            val dialogueData = DialogueDataManager.getDialogue(id)
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option_argue",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            // 玩家选择争论
+                            DialogueActionResult.Advance("town1_village_chief_opening_4")
+                        }
+                    )
                 )
-            )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
     }
 
     // 对话节点 4: 玩家反驳
-    val player_rebuttal_1 = object : DialogueNode {
-        override val id: String
-            get() = "town1_village_chief_opening_4"
-        val dialogueData = DialogueDataManager.getDialogue(id)
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
-                DialogueOption(
-                    id = "option_emphasize",
-                    text = dialogueData.options[0],
-                    action = { session ->
-                        // 玩家选择强调离开的重要性
-                        DialogueActionResult.Advance("town1_village_chief_opening_5")
-                    }
+    val player_rebuttal_1 by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "town1_village_chief_opening_4"
+            val dialogueData = DialogueDataManager.getDialogue(id)
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option_emphasize",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            // 玩家选择强调离开的重要性
+                            DialogueActionResult.Advance("town1_village_chief_opening_5")
+                        }
+                    )
                 )
-            )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
     }
 
     // 对话节点 5: 村长的第二次反击
-    val village_chief_counter_2 = object : DialogueNode {
-        override val id: String
-            get() = "town1_village_chief_opening_5"
-        val dialogueData = DialogueDataManager.getDialogue(id)
-        override val text: Text<TextUnit>
-            get() = PhaseDialogueBuilder().addText(dialogueData).build()
-        override val options: List<DialogueOption>
-            get() = listOf(
-                DialogueOption(
-                    id = "option_express",
-                    text = dialogueData.options[0],
-                    action = { session ->
-                        // 玩家表达对村长行为的失望，并退出
-                        DialogueActionResult.Exit
-                    }
+    val village_chief_counter_2 by lazy {
+        object : DialogueNode {
+            override val id: String
+                get() = "town1_village_chief_opening_5"
+            val dialogueData = DialogueDataManager.getDialogue(id)
+            override val text: Text<TextUnit>
+                get() = PhaseDialogueBuilder().addText(dialogueData).build()
+            override val options: List<DialogueOption>
+                get() = listOf(
+                    DialogueOption(
+                        id = "option_express",
+                        text = dialogueData.options[0],
+                        action = { session ->
+                            // 玩家表达对村长行为的失望，并退出
+                            DialogueActionResult.Exit
+                        }
+                    )
                 )
-            )
-        override val result: DialogueActionResult
-            get() = DialogueActionResult.Exit
+            override val result: DialogueActionResult
+                get() = DialogueActionResult.Exit
+        }
     }
 
     // 定义对话树
-    val tree = SimpleDialogueTree(DialogueRootSelector {
-        val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
-        val taskData = data.tasks.get("villageChiefTask") ?: return@DialogueRootSelector ""
-        if (taskData.taskDoingData == null) return@DialogueRootSelector ""
-        return@DialogueRootSelector "town1_village_chief_opening_1"
-    }, listOf(town1_c_opening, playerRequest, village_chief_response_1, playerRequest, village_chief_counter_2))
+    val tree by lazy {
+        SimpleDialogueTree(DialogueRootSelector {
+            val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
+            val taskData = data.tasks.get("villageChiefTask") ?: return@DialogueRootSelector ""
+            if (taskData.taskDoingData == null) return@DialogueRootSelector ""
+            return@DialogueRootSelector "town1_village_chief_opening_1"
+        }, listOf(town1_c_opening, playerRequest, village_chief_response_1, playerRequest, village_chief_counter_2))
+    }
 
 
     fun registerOrigin() {
