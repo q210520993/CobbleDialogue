@@ -14,7 +14,6 @@ import com.c1ok.cobbledialogue.cobbledialogue.task.goals.DialogueEvent
 
 object TownOneZhang {
 
-
     val town1_zhang_intro_1 by lazy {
         object : DialogueNode {
             override val id: String
@@ -93,7 +92,7 @@ object TownOneZhang {
 
     fun registerOrigin() {
         val town1_zhang_intro_1  = DialogueData(
-            id = "town1_zhang_intro_1 ",
+            id = "town1_zhang_intro_1",
             dialogues = listOf(
                 "§bPlayer: §aGrandpa! The village chief won’t agree! We tried everything, but he still kicked us out!",
                 """§bOld Zhang: §3How many times has this been now? How many times this month? I’ve told you, 

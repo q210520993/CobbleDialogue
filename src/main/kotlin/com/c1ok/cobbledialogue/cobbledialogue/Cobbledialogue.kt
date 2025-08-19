@@ -17,9 +17,6 @@ import java.nio.file.Path
 
 
 class Cobbledialogue : ModInitializer {
-    companion object {
-        const val MOD_ID = "cobbledialogue"
-    }
 
     override fun onInitialize() {
 
@@ -33,8 +30,8 @@ class Cobbledialogue : ModInitializer {
         }
 
         DialogueDataManager.loadDialogue()
-        TaskManager.registerTasks()
         PlayerDataManager.loadDatas()
+        TaskManager.registerTasks()
 
         ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
             DialogueDataManager.saveDialogue()
