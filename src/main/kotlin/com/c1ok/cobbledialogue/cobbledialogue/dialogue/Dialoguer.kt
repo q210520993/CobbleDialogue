@@ -7,7 +7,9 @@ import com.c1ok.cobbledialogue.cobbledialogue.dialogue.text.TextUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.HoverEvent
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
 import java.util.*
@@ -42,7 +44,11 @@ class PlayerDialoguer(val player: Player) : Dialoguer {
             // 再次判断，如果对话被取消，则直接任务取消
             if (!active) return@launch
             node.options.forEachIndexed { idx, opt ->
-                showDialogueTextUnit(ComponentTextUnit(Component.literal("$idx: ${opt.text.string}")))
+                showDialogueTextUnit(ComponentTextUnit(
+                    Component.literal("$idx: ${opt.text.string}").withStyle {
+                        it.withClickEvent(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dl select ${opt.id}"))
+                    }
+                ))
             }
         }.invokeOnCompletion {
             closeDialogue()

@@ -149,11 +149,8 @@ object TownOneArgue {
     // 定义对话树
     val tree by lazy {
         SimpleDialogueTree(DialogueRootSelector {
-            val data = PlayerDataManager.getPlayerData(it.id) ?: return@DialogueRootSelector ""
-            val taskData = data.tasks.get("villageChiefTask") ?: return@DialogueRootSelector ""
-            if (taskData.taskDoingData == null) return@DialogueRootSelector ""
             return@DialogueRootSelector "town1_village_chief_opening_1"
-        }, listOf(town1_c_opening, playerRequest, village_chief_response_1, playerRequest, village_chief_counter_2))
+        }, listOf(town1_c_opening, playerRequest, village_chief_response_1, playerRequest, village_chief_counter_2, player_rebuttal_1))
     }
 
 

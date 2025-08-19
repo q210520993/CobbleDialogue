@@ -43,6 +43,7 @@ public class TestCommand extends Subcommand {
             return 0;
 
         } catch (Exception e) {
+            e.printStackTrace();
             context.getSource().sendSystemMessage(Component.literal("§cError: " + e.getMessage()));
             return 0;
         }

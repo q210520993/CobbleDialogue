@@ -22,7 +22,6 @@ object DialogueDataManager {
     val originDialogues: MutableMap<String, DialogueData> = ConcurrentHashMap()
 
     fun loadDialogue() {
-        OriginDialogueData.regsiter()
         val str = Utils.readFileSync(CONFIG_FILE_PATH, CONFIG_FILE)
         val type = object : TypeToken<MutableMap<String, DialogueData>>() {}.type
         val dialogues: MutableMap<String, DialogueData> = gson.fromJson(str, type)

@@ -19,6 +19,9 @@ object DialogueManager {
 
     fun startSession(dialoguer: Dialoguer, tree: DialogueTree) {
         val rootNode = tree.getRootNode(dialoguer) ?: return
+        if (activeSessions.containsKey(dialoguer.id)) {
+            return
+        }
         activeSessions[dialoguer.id] = DialogueSession(dialoguer, tree, rootNode)
         dialoguer.showDialogue(rootNode) // 触发终端渲染
     }

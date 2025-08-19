@@ -16,8 +16,5 @@ public class LivingEntityMixin {
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessageHead(OutgoingChatMessage outgoingChatMessage, boolean bl, ChatType.Bound bound, CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer)(Object)this;
-        if (DialogueManager.INSTANCE.getActiveSessions().containsKey(player.getUUID())) {
-            ci.cancel();
-        }
     }
 }

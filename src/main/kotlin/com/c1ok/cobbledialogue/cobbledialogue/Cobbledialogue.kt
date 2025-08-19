@@ -1,10 +1,7 @@
 package com.c1ok.cobbledialogue.cobbledialogue
 
 import com.c1ok.cobbledialogue.cobbledialogue.command.Select
-import com.c1ok.cobbledialogue.cobbledialogue.data.CONFIG_FILE_PATH
-import com.c1ok.cobbledialogue.cobbledialogue.data.DATA_FILE
-import com.c1ok.cobbledialogue.cobbledialogue.data.DialogueDataManager
-import com.c1ok.cobbledialogue.cobbledialogue.data.PlayerDataManager
+import com.c1ok.cobbledialogue.cobbledialogue.data.*
 import com.c1ok.cobbledialogue.cobbledialogue.dialogue.DialogueManager
 import com.c1ok.cobbledialogue.cobbledialogue.task.TaskManager
 import com.c1ok.cobbledialogue.commands.DialogueCommand
@@ -20,6 +17,7 @@ class Cobbledialogue : ModInitializer {
 
     override fun onInitialize() {
 
+        OriginDialogueData.regsiter()
         val configFile = Path.of(CONFIG_FILE_PATH).toFile()
         if (!configFile.exists()) {
             DialogueDataManager.saveDialogue()
